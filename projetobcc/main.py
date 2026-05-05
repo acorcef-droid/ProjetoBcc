@@ -1,18 +1,20 @@
 import customtkinter as ctk
 from funcoes import converter
 
-
+# A aparecia da janela
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
 app = ctk.CTk()
 app.title("Convertor para Audio 2.0 👍")
-app.geometry("800x400")
+app.geometry("800x500")
 
+# titulo na janela
 label = ctk.CTkLabel(
     app, text="Bem-Vindo ao convertor de texto 👉 audio", font=("Helvetica", 20))
 label.pack(pady=20)
 
+# entrada onde vai se digitar o texto
 entry = ctk.CTkEntry(
     master=app,
     placeholder_text="Digitar um texto para tranformar em audio...",
@@ -23,24 +25,49 @@ entry = ctk.CTkEntry(
 
 entry.pack(pady=10, padx=10)
 
-idioma = ctk.StringVar(value="off")
+# caso não fique nada marcado idioma o idioma padrão será portugues
+idioma = ctk.StringVar(value="pt")  # padrão
+
+# apenas pra ver no terminal se está funcionando os botoes de seleção ex: Idioma selecionado: es
 
 
-def checkbox_event():
-    print(f"Checkbox is {idioma.get()}")
+def radio_event():
+    print(f"Idioma selecionado: {idioma.get()}")
 
 
-checkbox = ctk.CTkCheckBox(
+# seleção em portugues
+radio_pt = ctk.CTkRadioButton(
     master=app,
-    text="inglês",
-    command=checkbox_event,
+    text="Português",
     variable=idioma,
-    onvalue="es",
-    offvalue="off"
+    value="pt",
+    command=radio_event
 )
-checkbox.pack(pady=10)
+radio_pt.pack(pady=5)
+
+# selecao em ingles
+radio_en = ctk.CTkRadioButton(
+    master=app,
+    text="Inglês",
+    variable=idioma,
+    value="en",
+    command=radio_event
+)
+radio_en.pack(pady=5)
+
+# seleção em ingles
+radio_es = ctk.CTkRadioButton(
+    master=app,
+    text="Espanhol",
+    variable=idioma,
+    value="es",
+    command=radio_event
+)
+radio_es.pack(pady=5)
 
 # função para disparar a conversao:
+
+# funcão para disparar a conversao que puxa a funcao converter em funcoes.py com gTTS, e cria o audio, basicamente o coração fica aqui
 
 
 def disparar_conversao():
@@ -48,11 +75,10 @@ def disparar_conversao():
     idioma_selecionado = idioma.get()
 
     if texto_usuario:
-        if idioma_selecionado == "off":
-            idioma_selecionado = "pt"  # lingua padrão caso n selecione nada
         converter(texto_usuario, idioma_selecionado, 'meu_audio')
 
 
+# botao de converter que puxa a funcao disparar_conversao
 botao_converter = ctk.CTkButton(
     master=app, text="Converter", command=disparar_conversao)
 botao_converter.pack(pady=5)
