@@ -1,5 +1,7 @@
 from gtts import gTTS
 
+
+
 def converter(texto, idioma, nome_arquivo):
     audio = gTTS(text=texto, lang=idioma, slow=False)
 

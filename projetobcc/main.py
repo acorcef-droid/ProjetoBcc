@@ -39,35 +39,35 @@ def terminal_info():
     print(f"Idioma selecionado: {idioma.get()}")
 
 
-# seleção em portugues
+frame = ctk.CTkFrame(app)
+frame.pack(pady=10)
+
 radio_pt = ctk.CTkRadioButton(
-    master=app,
+    master=frame,
     text="Português",
     variable=idioma,
     value="pt",
     command=terminal_info
 )
-radio_pt.pack(pady=5)
+radio_pt.pack(side="left", padx=20)
 
-# selecao em ingles
 radio_en = ctk.CTkRadioButton(
-    master=app,
+    master=frame,
     text="Inglês",
     variable=idioma,
     value="en",
     command=terminal_info
 )
-radio_en.pack(pady=5)
+radio_en.pack(side="left", padx=20)
 
-# seleção em ingles
 radio_es = ctk.CTkRadioButton(
-    master=app,
+    master=frame,
     text="Espanhol",
     variable=idioma,
     value="es",
     command=terminal_info
 )
-radio_es.pack(pady=5)
+radio_es.pack(side="left", padx=20)
 
 # função para disparar a conversao:
 
@@ -75,7 +75,8 @@ radio_es.pack(pady=5)
 
 
 def disparar_conversao():
-    texto_usuario = caixa_texto.get("1.0", "end-1c")#"1.0" → início do texto (linha 1, posição 0) "end-1c" → até o final, ignorando o último “\n” automático
+    # "1.0" → início do texto (linha 1, posição 0) "end-1c" → até o final, ignorando o último “\n” automático
+    texto_usuario = caixa_texto.get("1.0", "end-1c")
     idioma_selecionado = idioma.get()
 
     if texto_usuario:
@@ -84,11 +85,17 @@ def disparar_conversao():
 
 # botao de converter que puxa a funcao disparar_conversao
 botao_converter = ctk.CTkButton(
-    master=app, 
+    master=app,
     text="Converter",
     command=disparar_conversao
-    )
+)
 botao_converter.pack(pady=5)
 
+botao_falar = ctk.CTkButton(
+    master=app,
+    text="Falar",
+    )
+
+botao_falar.pack(pady=5)
 
 app.mainloop()
