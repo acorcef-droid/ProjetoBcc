@@ -1,6 +1,6 @@
-
 import customtkinter as ctk
-from gtts import gTTS
+from funcoes import converter
+
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -16,7 +16,7 @@ entry = ctk.CTkEntry(
     master=app,
     placeholder_text="Digitar um texto para tranformar em audio...",
     width=400,
-    height=50,
+    height=200,
     corner_radius=10
 )
 
@@ -29,28 +29,23 @@ def checkbox_event():
 
 checkbox = ctk.CTkCheckBox(
     master=app,
-    text="Portugues",
+    text="inglês",
     command=checkbox_event,
     variable=idioma,
-    onvalue="pt",
+    onvalue="es",
     offvalue="off"
 )
 checkbox.pack(pady=10)
 
-def converter(texto, idioma, nome_arquivo):
-    audio = gTTS(text=texto, lang=idioma, slow=False)
-
-
-    audio.save(nome_arquivo + ".mp3")
-
-
-    print("Áudio salvo como: " + nome_arquivo + ".mp3")
-
+#função para disparar a conversao:
 def disparar_conversao():
     texto_usuario = entry.get()
+    idioma_selecionado = idioma.get()
 
     if texto_usuario:
-        converter(texto_usuario, idioma,'meu_audio')
+        if idioma_selecionado == "off":
+            idioma_selecionado = "pt" #lingua padrão caso n selecione nada
+        converter(texto_usuario, idioma_selecionado,'meu_audio')
 
 get_button = ctk.CTkButton(master=app, text="Converter", command=disparar_conversao)
 get_button.pack(pady=5)
