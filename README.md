@@ -28,6 +28,4 @@ python main.py
 Observações
 É necessário ter o Python instalado
 O gTTS precisa de conexão com a internet
-Autor
 
-Seu nome
