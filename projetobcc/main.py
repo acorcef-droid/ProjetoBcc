@@ -6,24 +6,28 @@ ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
 app = ctk.CTk()
-app.title("Convertor para Audio 2.0 👍")
+app.title("Convertor para Audio 2.0")
 app.geometry("800x500")
 
 # titulo na janela
 label = ctk.CTkLabel(
-    app, text="Bem-Vindo ao convertor de texto 👉 audio", font=("Helvetica", 20))
+    # 20 é o tamanho da fonte
+    app, text="Bem-Vindo ao conversor de texto 👉 audio", font=("Helvetica", 20))
 label.pack(pady=20)
 
+# descricao da box
+descricao = ctk.CTkLabel(app, text="Digite o texto abaixo:")
+descricao.pack(pady=5)
+
 # entrada onde vai se digitar o texto
-entry = ctk.CTkEntry(
+caixa_texto = ctk.CTkTextbox(
     master=app,
-    placeholder_text="Digitar um texto para tranformar em audio...",
     width=400,
     height=200,
     corner_radius=10
 )
 
-entry.pack(pady=10, padx=10)
+caixa_texto.pack(pady=10, padx=10)
 
 # caso não fique nada marcado idioma o idioma padrão será portugues
 idioma = ctk.StringVar(value="pt")  # padrão
@@ -31,7 +35,7 @@ idioma = ctk.StringVar(value="pt")  # padrão
 # apenas pra ver no terminal se está funcionando os botoes de seleção ex: Idioma selecionado: es
 
 
-def radio_event():
+def terminal_info():
     print(f"Idioma selecionado: {idioma.get()}")
 
 
@@ -41,7 +45,7 @@ radio_pt = ctk.CTkRadioButton(
     text="Português",
     variable=idioma,
     value="pt",
-    command=radio_event
+    command=terminal_info
 )
 radio_pt.pack(pady=5)
 
@@ -51,7 +55,7 @@ radio_en = ctk.CTkRadioButton(
     text="Inglês",
     variable=idioma,
     value="en",
-    command=radio_event
+    command=terminal_info
 )
 radio_en.pack(pady=5)
 
@@ -61,7 +65,7 @@ radio_es = ctk.CTkRadioButton(
     text="Espanhol",
     variable=idioma,
     value="es",
-    command=radio_event
+    command=terminal_info
 )
 radio_es.pack(pady=5)
 
@@ -71,7 +75,7 @@ radio_es.pack(pady=5)
 
 
 def disparar_conversao():
-    texto_usuario = entry.get()
+    texto_usuario = caixa_texto.get("1.0", "end-1c")#"1.0" → início do texto (linha 1, posição 0) "end-1c" → até o final, ignorando o último “\n” automático
     idioma_selecionado = idioma.get()
 
     if texto_usuario:
@@ -80,7 +84,10 @@ def disparar_conversao():
 
 # botao de converter que puxa a funcao disparar_conversao
 botao_converter = ctk.CTkButton(
-    master=app, text="Converter", command=disparar_conversao)
+    master=app, 
+    text="Converter",
+    command=disparar_conversao
+    )
 botao_converter.pack(pady=5)
 
 
